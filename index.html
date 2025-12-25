@@ -39,6 +39,7 @@
       (function () {
         var audio = document.getElementById("bgm");
         if (!audio) return;
+        audio.volume = 0.2;
         var tryPlay = function () {
           var p = audio.play();
           if (p && typeof p.catch === "function") {

@@ -9,18 +9,12 @@
 在这个冬天感受到幸福与温暖，  
 迎接一个充满希望的新一年。❤️
 
----
-
-🎄✨ **Merry Christmas & Happy New Year** ✨🎄
-
 This project is a small Christmas gift —  
 an interactive Christmas tree created to hold **memories, wishes, and warmth**.
 
 I hope you can enjoy this experience together with the people you love:  
 upload photos, explore slowly, make a wish,  
 and welcome the New Year with happiness and hope. ✨
-
----
 
 # 🎄 Interactive Christmas Tree
 
@@ -168,7 +162,7 @@ const [post] = await sql`
 - No authentication
 - No personal data collected
 - Uploaded photos stay in the browser
-- Wishes are anonymous and optional to share
+- Wishes are anonymous
 
 ---
 
