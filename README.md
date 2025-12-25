@@ -25,8 +25,8 @@ and welcome the New Year with happiness and hope. ✨
 # 🎄 Interactive Christmas Tree
 
 <p align="center">
-  <img src="screenshots/Scattered.png" width="48%" />
-  <img src="screenshots/Fireworks.png" width="48%" />
+  <img src="screenshots/Scattered.png" width="60%" />
+  <img src="screenshots/Fireworks.png" width="36%" />
 </p>
 
 An interactive, cinematic 3D Christmas Tree experience built with  
@@ -152,13 +152,14 @@ Database access is handled **server-side only** using Netlify Functions.
 Example:
 
 ```ts
-import { neon } from '@netlify/neon';
+import { neon } from "@netlify/neon";
 
 const sql = neon(); // automatically uses env NETLIFY_DATABASE_URL
 
 const [post] = await sql`
   SELECT * FROM posts WHERE id = ${postId}
 `;
+```
 
 ---
 
@@ -174,4 +175,7 @@ const [post] = await sql`
 ## 📜 License
 
 MIT License
+
+```
+
 ```
