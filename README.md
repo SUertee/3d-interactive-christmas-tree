@@ -25,8 +25,8 @@ and welcome the New Year with happiness and hope. ✨
 # 🎄 Interactive Christmas Tree
 
 <p align="center">
-  <img src="screenshots/Scattered.png" width="60%" />
-  <img src="screenshots/Fireworks.png" width="36%" />
+  <img src="screenshots/Scattered.png" width="80%" />
+  <img src="screenshots/Fireworks.png" width="16%" />
 </p>
 
 An interactive, cinematic 3D Christmas Tree experience built with  
