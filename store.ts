@@ -20,6 +20,9 @@ interface AppState {
   isFlyingWish: boolean; // State to track if a wish is currently in flight
   uploadedPhotoUrls: string[];
 
+  // UI Language
+  language: 'zh' | 'en';
+
   // Actions
   setTreeState: (state: TreeMorphState) => void;
   setMorphProgress: (progress: number) => void;
@@ -30,6 +33,7 @@ interface AppState {
   setGestureTarget: (x: number | null, y: number | null) => void;
   setFlyingWish: (isFlying: boolean) => void;
   setUploadedPhotoUrls: (urls: string[]) => void;
+  toggleLanguage: () => void;
   
   triggerWish: () => void;
   triggerAbsorption: (isSpecial?: boolean) => void;
@@ -56,6 +60,7 @@ export const useStore = create<AppState>((set, get) => ({
   isLastAbsorptionSpecial: false,
   isFlyingWish: false,
   uploadedPhotoUrls: [],
+  language: 'zh',
 
   setTreeState: (state) => set({ treeState: state }),
   setMorphProgress: (progress) => set({ morphProgress: progress }),
@@ -66,6 +71,8 @@ export const useStore = create<AppState>((set, get) => ({
   setGestureTarget: (x, y) => set({ gestureTargetX: x, gestureTargetY: y }),
   setFlyingWish: (isFlying) => set({ isFlyingWish: isFlying }),
   setUploadedPhotoUrls: (urls) => set({ uploadedPhotoUrls: urls }),
+  toggleLanguage: () =>
+    set((state) => ({ language: state.language === 'zh' ? 'en' : 'zh' })),
 
   triggerWish: () => set((state) => ({ wishCount: state.wishCount + 1 })),
   triggerAbsorption: (isSpecial = false) => set({ 

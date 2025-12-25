@@ -18,11 +18,41 @@ const UI: React.FC = () => {
     exitRide,
     uploadedPhotoUrls,
     setUploadedPhotoUrls,
+    language,
+    toggleLanguage,
   } = useStore((state) => state);
 
   const [wishText, setWishText] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isStaticPhotoMode = STATIC_PHOTO_FILES.length > 0;
+  const isZh = language === "zh";
+  const copy = isZh
+    ? {
+        title: "圣诞快乐",
+        subtitleLine1: "启用相机，张开或移动手掌",
+        subtitleLine2: "以解锁魔法",
+        enableCamera: "启用相机",
+        uploadPhotos: "上传照片",
+        staticPhotos: "静态照片",
+        startJourney: "开始旅程",
+        exitRide: "退出旅程",
+        wishPlaceholder: "许个愿望...",
+        send: "发送",
+        clearPhotos: "清空照片",
+      }
+    : {
+        title: "MERRY CHRISTMAS",
+        subtitleLine1: "Enable camera, open or move your hand to",
+        subtitleLine2: "unlock the magic",
+        enableCamera: "ENABLE CAMERA",
+        uploadPhotos: "Upload Photos",
+        staticPhotos: "Static Photos",
+        startJourney: "Start Journey",
+        exitRide: "Exit Ride",
+        wishPlaceholder: "Make a wish...",
+        send: "SEND",
+        clearPhotos: "Clear photos",
+      };
 
   const handleSendWish = (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,11 +129,11 @@ const UI: React.FC = () => {
                   filter: "drop-shadow(0 0 15px rgba(255, 215, 0, 0.3))",
                 }}
               >
-                MERRY CHRISTMAS
+                {copy.title}
               </h1>
               <p className="text-white text-[10px] md:text-xs font-light tracking-widest opacity-90 max-w-sm leading-relaxed">
-                Enable camera, open or move your hand to <br />
-                unlock the magic
+                {copy.subtitleLine1} <br />
+                {copy.subtitleLine2}
               </p>
             </div>
 
@@ -135,7 +165,7 @@ const UI: React.FC = () => {
                   />
                 </div>
                 <span className="text-[#ffd700] text-[9px] font-bold tracking-[0.25em] uppercase group-hover:text-white transition-colors">
-                  ENABLE CAMERA
+                  {copy.enableCamera}
                 </span>
               </button>
             </div>
@@ -159,7 +189,7 @@ const UI: React.FC = () => {
                     className="group flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
                   >
                     <span className="text-white/80 text-[8px] tracking-[0.2em] font-bold uppercase group-hover:text-white">
-                      Upload Photos
+                      {copy.uploadPhotos}
                     </span>
                     <div className="text-white/50 text-[8px] tracking-[0.2em] font-bold uppercase">
                       {uploadedPhotoUrls.length}/{TREE_CONFIG.polaroidCount}
@@ -168,7 +198,7 @@ const UI: React.FC = () => {
                   {uploadedPhotoUrls.length > 0 && (
                     <button
                       onClick={handleClearPhotos}
-                      aria-label="Clear photos"
+                      aria-label={copy.clearPhotos}
                       className="group flex items-center justify-center w-7 h-7 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
                     >
                       <svg
@@ -196,7 +226,7 @@ const UI: React.FC = () => {
             {isStaticPhotoMode && (
               <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/30 backdrop-blur-md">
                 <span className="text-white/60 text-[9px] tracking-[0.2em] font-bold uppercase">
-                  Static Photos
+                  {copy.staticPhotos}
                 </span>
                 <div className="text-white/40 text-[9px] tracking-[0.2em] font-bold uppercase">
                   {STATIC_PHOTO_FILES.length}
@@ -210,7 +240,7 @@ const UI: React.FC = () => {
                 className="group flex items-center gap-2 px-4 py-2 rounded-full border border-[#ffd700]/30 bg-black/40 backdrop-blur-md hover:bg-[#ffd700]/10 transition-all duration-300 hover:border-[#ffd700]"
               >
                 <span className="text-[#ffd700] text-[9px] tracking-[0.2em] font-bold uppercase">
-                  Start Journey
+                  {copy.startJourney}
                 </span>
                 <div className="w-1.5 h-1.5 rounded-full bg-[#ffd700] shadow-[0_0_6px_#ffd700] group-hover:scale-125 transition-transform duration-300" />
               </button>
@@ -223,7 +253,7 @@ const UI: React.FC = () => {
                 className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
               >
                 <span className="text-white/80 text-[9px] tracking-[0.2em] font-bold uppercase group-hover:text-white">
-                  Exit Ride
+                  {copy.exitRide}
                 </span>
                 <div className="w-1.5 h-1.5 rounded-full bg-white/50 group-hover:bg-white transition-colors duration-300" />
               </button>
@@ -250,7 +280,7 @@ const UI: React.FC = () => {
                 type="text"
                 value={wishText}
                 onChange={(e) => setWishText(e.target.value)}
-                placeholder="Make a wish..."
+                placeholder={copy.wishPlaceholder}
                 maxLength={200}
                 style={{ fontFamily: "'Space Mono', monospace" }}
                 className="relative z-10 w-48 bg-transparent border-none outline-none text-white text-xs placeholder:text-white/40 tracking-wider"
@@ -269,10 +299,21 @@ const UI: React.FC = () => {
                             }
                         `}
               >
-                {isFlyingWish ? "..." : "SEND"}
+                {isFlyingWish ? "..." : copy.send}
               </button>
             </form>
           </div>
+        </div>
+
+        <div className="absolute bottom-4 left-4 pointer-events-auto">
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            aria-label={isZh ? "切换到英文" : "切换到中文"}
+            className="w-9 h-9 rounded-full border border-[#ffd700]/70 bg-black/50 text-[#ffd700] text-[11px] font-bold tracking-widest flex items-center justify-center shadow-[0_0_12px_rgba(255,215,0,0.2)] hover:shadow-[0_0_16px_rgba(255,215,0,0.4)] transition-all duration-300"
+          >
+            {isZh ? "EN" : "中"}
+          </button>
         </div>
       </div>
     </>

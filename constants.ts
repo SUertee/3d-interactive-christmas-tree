@@ -11,7 +11,7 @@ export const TREE_CONFIG: TreeConfig = {
 };
 
 // If you want to ship static photos, list filenames here from `public/static/photos`.
-// Example: ['photo-1.jpg', 'photo-2.png']
+// Example: export const STATIC_PHOTO_FILES: string[] = ['photo-1.jpg', 'photo-2.png']
 // Leave empty to allow user uploads at runtime.
 export const STATIC_PHOTO_FILES: string[] = [];
 
