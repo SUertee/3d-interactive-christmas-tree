@@ -18,6 +18,7 @@ interface AppState {
   lastAbsorptionTime: number; // Timestamp when tree absorbed energy
   isLastAbsorptionSpecial: boolean; // Tracks if the last wish was a special multicolor one
   isFlyingWish: boolean; // State to track if a wish is currently in flight
+  uploadedPhotoUrls: string[];
 
   // Actions
   setTreeState: (state: TreeMorphState) => void;
@@ -28,6 +29,7 @@ interface AppState {
   setHandDetected: (detected: boolean) => void;
   setGestureTarget: (x: number | null, y: number | null) => void;
   setFlyingWish: (isFlying: boolean) => void;
+  setUploadedPhotoUrls: (urls: string[]) => void;
   
   triggerWish: () => void;
   triggerAbsorption: (isSpecial?: boolean) => void;
@@ -53,6 +55,7 @@ export const useStore = create<AppState>((set, get) => ({
   lastAbsorptionTime: 0,
   isLastAbsorptionSpecial: false,
   isFlyingWish: false,
+  uploadedPhotoUrls: [],
 
   setTreeState: (state) => set({ treeState: state }),
   setMorphProgress: (progress) => set({ morphProgress: progress }),
@@ -62,6 +65,7 @@ export const useStore = create<AppState>((set, get) => ({
   setHandDetected: (detected) => set({ isHandDetected: detected }),
   setGestureTarget: (x, y) => set({ gestureTargetX: x, gestureTargetY: y }),
   setFlyingWish: (isFlying) => set({ isFlyingWish: isFlying }),
+  setUploadedPhotoUrls: (urls) => set({ uploadedPhotoUrls: urls }),
 
   triggerWish: () => set((state) => ({ wishCount: state.wishCount + 1 })),
   triggerAbsorption: (isSpecial = false) => set({ 

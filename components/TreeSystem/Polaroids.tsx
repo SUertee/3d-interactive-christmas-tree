@@ -3,10 +3,8 @@ import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { getRandomSpherePoint } from "../../utils/geometry";
-import { TREE_CONFIG, COLORS } from "../../constants";
+import { TREE_CONFIG, COLORS, STATIC_PHOTO_FILES } from "../../constants";
 import { useStore } from "../../store";
-
-const PHOTO_FILES: string[] = [];
 
 const buildPhotoUrl = (filename: string): string => {
   const base = import.meta.env.BASE_URL || "/";
@@ -117,7 +115,20 @@ const PolaroidFrame: React.FC<{
 const Polaroids: React.FC = () => {
   const groupRef = useRef<THREE.Group>(null);
   const morphProgress = useStore((state) => state.morphProgress);
-  const photoUrls = useMemo(() => PHOTO_FILES.map(buildPhotoUrl), []);
+  const uploadedPhotoUrls = useStore((state) => state.uploadedPhotoUrls);
+  const staticPhotoUrls = useMemo(
+    () => STATIC_PHOTO_FILES.map(buildPhotoUrl),
+    []
+  );
+  const photoUrls = useMemo(() => {
+    if (staticPhotoUrls.length > 0) {
+      return staticPhotoUrls;
+    }
+    if (uploadedPhotoUrls.length > 0) {
+      return uploadedPhotoUrls;
+    }
+    return [];
+  }, [staticPhotoUrls, uploadedPhotoUrls]);
 
   if (photoUrls.length === 0) {
     return null;
@@ -186,7 +197,7 @@ const Polaroids: React.FC = () => {
 
     // Keep image order: bottom -> top
     return itemsData;
-  }, [count]);
+  }, [count, photoUrls]);
 
   // Easing function
   const ease = (t: number) =>

@@ -10,6 +10,11 @@ export const TREE_CONFIG: TreeConfig = {
   chaosRadius: 10, // Reduced from 30 to 10 for tighter scatter
 };
 
+// If you want to ship static photos, list filenames here from `public/static/photos`.
+// Example: ['photo-1.jpg', 'photo-2.png']
+// Leave empty to allow user uploads at runtime.
+export const STATIC_PHOTO_FILES: string[] = [];
+
 export const COLORS = {
   background: '#050810',
   foliage: '#0f4d22',

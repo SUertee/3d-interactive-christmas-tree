@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useStore } from '../store';
 import { TreeMorphState } from '../types';
 import GestureController from './GestureController';
 import { saveWish } from '../utils/wishes';
+import { STATIC_PHOTO_FILES, TREE_CONFIG } from '../constants';
+import { compressImageFile } from '../utils/photoUpload';
 
 const UI: React.FC = () => {
   const { 
@@ -13,10 +15,14 @@ const UI: React.FC = () => {
     morphProgress,
     treeState,
     startRide,
-    exitRide
+    exitRide,
+    uploadedPhotoUrls,
+    setUploadedPhotoUrls
   } = useStore((state) => state);
 
   const [wishText, setWishText] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const isStaticPhotoMode = STATIC_PHOTO_FILES.length > 0;
 
   const handleSendWish = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +32,35 @@ const UI: React.FC = () => {
     triggerWish();
     setWishText('');
     void saveWish(trimmedWish);
+  };
+
+  const handlePhotoUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = Array.from(event.target.files ?? []);
+    if (files.length === 0) return;
+
+    const limitedFiles = files.slice(0, TREE_CONFIG.polaroidCount);
+    const compressed = await Promise.all(
+      limitedFiles.map(async (file) => {
+        try {
+          return await compressImageFile(file, 2048);
+        } catch {
+          return file;
+        }
+      })
+    );
+    const urls = compressed.map((blob) => URL.createObjectURL(blob));
+
+    uploadedPhotoUrls.forEach((url) => URL.revokeObjectURL(url));
+    setUploadedPhotoUrls(urls);
+
+    event.target.value = '';
+  };
+
+  const handleClearPhotos = () => {
+    uploadedPhotoUrls.forEach((url) => URL.revokeObjectURL(url));
+    setUploadedPhotoUrls([]);
   };
 
   // Show Ride button when tree is mostly formed (> 0.8)
@@ -93,6 +128,49 @@ const UI: React.FC = () => {
 
             {/* Top Right Controls (Start/Exit Ride) */}
             <div className="pointer-events-auto flex flex-col items-end gap-2">
+                {!isStaticPhotoMode && (
+                    <>
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={handlePhotoUpload}
+                            className="hidden"
+                        />
+                        <button
+                            onClick={() => fileInputRef.current?.click()}
+                            className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
+                        >
+                            <span className="text-white/80 text-[9px] tracking-[0.2em] font-bold uppercase group-hover:text-white">
+                                Upload Photos
+                            </span>
+                            <div className="text-white/50 text-[9px] tracking-[0.2em] font-bold uppercase">
+                                {uploadedPhotoUrls.length}/{TREE_CONFIG.polaroidCount}
+                            </div>
+                        </button>
+                        {uploadedPhotoUrls.length > 0 && (
+                            <button
+                                onClick={handleClearPhotos}
+                                className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
+                            >
+                                <span className="text-white/80 text-[9px] tracking-[0.2em] font-bold uppercase group-hover:text-white">
+                                    Clear Photos
+                                </span>
+                            </button>
+                        )}
+                    </>
+                )}
+                {isStaticPhotoMode && (
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/30 backdrop-blur-md">
+                        <span className="text-white/60 text-[9px] tracking-[0.2em] font-bold uppercase">
+                            Static Photos
+                        </span>
+                        <div className="text-white/40 text-[9px] tracking-[0.2em] font-bold uppercase">
+                            {STATIC_PHOTO_FILES.length}
+                        </div>
+                    </div>
+                )}
                 {/* Start Ride Button */}
                 {isTreeReady && !isRideMode && (
                     <button 
