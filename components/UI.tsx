@@ -138,27 +138,44 @@ const UI: React.FC = () => {
                             onChange={handlePhotoUpload}
                             className="hidden"
                         />
-                        <button
-                            onClick={() => fileInputRef.current?.click()}
-                            className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
-                        >
-                            <span className="text-white/80 text-[9px] tracking-[0.2em] font-bold uppercase group-hover:text-white">
-                                Upload Photos
-                            </span>
-                            <div className="text-white/50 text-[9px] tracking-[0.2em] font-bold uppercase">
-                                {uploadedPhotoUrls.length}/{TREE_CONFIG.polaroidCount}
-                            </div>
-                        </button>
-                        {uploadedPhotoUrls.length > 0 && (
+                        <div className="flex items-center gap-2">
                             <button
-                                onClick={handleClearPhotos}
-                                className="group flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
+                                onClick={() => fileInputRef.current?.click()}
+                                className="group flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
                             >
-                                <span className="text-white/80 text-[9px] tracking-[0.2em] font-bold uppercase group-hover:text-white">
-                                    Clear Photos
+                                <span className="text-white/80 text-[8px] tracking-[0.2em] font-bold uppercase group-hover:text-white">
+                                    Upload
                                 </span>
+                                <div className="text-white/50 text-[8px] tracking-[0.2em] font-bold uppercase">
+                                    {uploadedPhotoUrls.length}/{TREE_CONFIG.polaroidCount}
+                                </div>
                             </button>
-                        )}
+                            {uploadedPhotoUrls.length > 0 && (
+                                <button
+                                    onClick={handleClearPhotos}
+                                    aria-label="Clear photos"
+                                    className="group flex items-center justify-center w-7 h-7 rounded-full border border-white/20 bg-black/40 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="12"
+                                        height="12"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="text-white/70 group-hover:text-white"
+                                    >
+                                        <path d="M3 6h18" />
+                                        <path d="M8 6v-2h8v2" />
+                                        <path d="M6 6l1 14h10l1-14" />
+                                        <path d="M10 11v6" />
+                                        <path d="M14 11v6" />
+                                    </svg>
+                                </button>
+                            )}
+                        </div>
                     </>
                 )}
                 {isStaticPhotoMode && (

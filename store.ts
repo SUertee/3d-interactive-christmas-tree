@@ -97,7 +97,11 @@ export const useStore = create<AppState>((set, get) => ({
     
     set({ 
       treeState: TreeMorphState.RIDE_RIBBON,
-      ribbonProgress: 0 
+      ribbonProgress: 0,
+      isCameraEnabled: false,
+      isHandDetected: false,
+      gestureTargetX: null,
+      gestureTargetY: null
     });
   },
 
