@@ -24,6 +24,11 @@ and welcome the New Year with happiness and hope. ✨
 
 # 🎄 Interactive Christmas Tree
 
+<p align="center">
+  <img src="screenshots/Scattered.png" width="48%" />
+  <img src="screenshots/Fireworks.png" width="48%" />
+</p>
+
 An interactive, cinematic 3D Christmas Tree experience built with  
 **React**, **TypeScript**, and **Three.js (React Three Fiber)**.
 
