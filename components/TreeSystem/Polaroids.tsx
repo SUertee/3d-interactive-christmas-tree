@@ -130,13 +130,13 @@ const Polaroids: React.FC = () => {
     return [];
   }, [staticPhotoUrls, uploadedPhotoUrls]);
 
-  if (photoUrls.length === 0) {
-    return null;
-  }
   const count = photoUrls.length;
 
   // Generate Positions
   const items = useMemo(() => {
+    if (count === 0) {
+      return [];
+    }
     const itemsData = [];
     const height = TREE_CONFIG.treeHeight;
     const radius = TREE_CONFIG.treeRadius;
@@ -202,6 +202,10 @@ const Polaroids: React.FC = () => {
   // Easing function
   const ease = (t: number) =>
     t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  if (count === 0) {
+    return null;
+  }
 
   return (
     <group ref={groupRef}>
