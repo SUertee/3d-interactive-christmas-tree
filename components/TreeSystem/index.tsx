@@ -8,7 +8,6 @@ import Ribbon from './Ribbon';
 import Star from './Star';
 import BaseRings from './BaseRings';
 import Polaroids from './Polaroids';
-import CDPlayer from './CDPlayer';
 import { useStore } from '../../store';
 
 const ChristmasTree: React.FC = () => {
@@ -37,7 +36,6 @@ const ChristmasTree: React.FC = () => {
       <Gifts />
       <Polaroids />
       {morphProgress > 0.6 && <BaseRings />}
-      {morphProgress > 0.6 && <CDPlayer />}
       <Ribbon />
       <Star />
     </group>
