@@ -60,7 +60,7 @@ export const useStore = create<AppState>((set, get) => ({
   isLastAbsorptionSpecial: false,
   isFlyingWish: false,
   uploadedPhotoUrls: [],
-  language: 'zh',
+  language: 'en',
 
   setTreeState: (state) => set({ treeState: state }),
   setMorphProgress: (progress) => set({ morphProgress: progress }),
